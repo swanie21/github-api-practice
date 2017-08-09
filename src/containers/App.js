@@ -55,6 +55,7 @@ class App extends Component {
   _submitGistId(e) {
     e.preventDefault();
     this._clearInput();
+    this._renderFiles(this.state.gistId, 'blog-two.md');
     fetchGistById(this.state.gistId)
       .then(response => {
         this.setState({
@@ -108,7 +109,19 @@ class App extends Component {
     } else return null;
   }
 
+  _renderFiles(id, filename) {
+    fetchGistById(id)
+    .then(gistData => {
+      let content = gistData.data.files[filename].content;
+      console.log(content);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   render() {
+    console.log(this.state.gists);
       return (
       <div className='app'>
         <h1>Find Gists by Username</h1>
